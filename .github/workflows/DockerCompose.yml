@@ -1,0 +1,21 @@
+name: Docker Compose
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: isbang/compose-action@v1.4.1
+      with:
+        compose-file: "./docker-compose.yml"
+      env:
+        POSTGRES_VERSION: ${{ secrets.POSTGRES_VERSION }}
+        POSTGRES_USER: ${{ secrets.USER }}
+        POSTGRES_PASSWORD: ${{ secrets.PASSWORD }}
